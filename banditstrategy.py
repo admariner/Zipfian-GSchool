@@ -91,26 +91,22 @@ def epsilon_greedy(self, epsilon=0.1):
     Otherwise pick the bandit with the best observed proportion of winning.
     Return the index of the winning bandit.
     '''
-    pass
     r = np.random.random()
     if r <= epsilon:
         return random_choice(self)
-    else:
-        win_percent = self.wins / self.trials.astype(float)
-        return win_percent.argmax(axis=0)
+    win_percent = self.wins / self.trials.astype(float)
+    return win_percent.argmax(axis=0)
 
 def softmax(self, tau=0.001):
     '''
     Pick an bandit according to the Boltzman Distribution.
     Return the index of the winning bandit.
     '''
-    pass
-           
     win_percent = (self.wins + 1) / (self.trials.astype(float) + 1)
-    
+
     soft_calc = np.exp(win_percent / tau)
     denom = sum(soft_calc)
-  
+
     return (soft_calc / denom).argmax(axis=0)
         
 def ucb1(self):
@@ -118,8 +114,6 @@ def ucb1(self):
     Pick the bandit according to the UCB1 strategy.
     Return the index of the winning bandit.
     '''
-    pass
-
     win_percent = (self.wins) / (self.trials.astype(float))
     ucbl_band = win_percent + np.sqrt((2*np.log(self.N))/self.trials)
     return ucbl_band.argmax(axis=0)
@@ -130,6 +124,5 @@ def bayesian_bandit(self):
     with the largest value.
     Return the index of the winning bandit.
     '''
-    pass
     random_beta_sample = stats.beta.rvs(a=1+self.wins, b=1+self.trials-self.wins)
     return random_beta_sample.argmax(axis=0)
